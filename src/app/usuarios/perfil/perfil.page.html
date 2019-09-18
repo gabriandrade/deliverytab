@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!-- List of Text Items -->
+<ion-list>
+    <ion-item>
+      <ion-label>{{user.name}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{user.email}}</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" color="warning" [routerLink]="['/usurarios/enderecos']">Meus Usuarios</ion-button>
+<ion-button expand="block" color="dark" (click)="sair()">Sair</ion-button>
+</ion-content>
