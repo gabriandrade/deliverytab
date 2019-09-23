@@ -6,7 +6,7 @@
   
   <ion-content padding>
     <ion-list>
-      <!--ion-item>
+      <ion-item>
   
         <ion-label>Categoria</ion-label>
         <ion-select (ionChange)="buscarProdutos()" [(ngModel)]="categoriaSelecionada">
@@ -15,7 +15,7 @@
           </ion-select-option>
         </ion-select>
   
-      </!--ion-item>-->
+      </ion-item>
   
       <ion-item *ngFor="let produto of produtos | async" (click)="adicionarProduto(produto.key)">
         <ion-avatar slot="start" *ngIf="produto.img">
@@ -25,14 +25,15 @@
           <h1>{{ produto.nome }}</h1>
           <h2>{{ produto.categoriaNome }}</h2>
           <pre text-wrap>{{ produto.descricao }}</pre>
-          <!--app-valor [valor]="produto.preco"></!--app-valor>-->
+          <!-- <span>{{ produto.preco | currency:'BRL' }}</span> -->
+          <app-valor [valor]="produto.preco"></app-valor>
         </ion-label>
       </ion-item>
     </ion-list>
   
-    <!--ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="carrinhoPossuiItens">
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="carrinhoPossuiItens">
       <ion-fab-button [routerLink]="['/pedido/carrinho']" color="secondary">
         <ion-icon name="cart"></ion-icon>
       </ion-fab-button>
-    </!--ion-fab>-->
+    </ion-fab> -->
   </ion-content>

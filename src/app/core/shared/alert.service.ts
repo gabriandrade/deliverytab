@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
-@ Injectable({
+@Injectable({
   providedIn: 'root'
 })
 export class AlertService {
@@ -9,22 +9,22 @@ export class AlertService {
   constructor(private alertController: AlertController) { }
 
   async ShowConfirmaExclusao(nome: string, actionRemove:() =>void){
-    const alert = await this .alertController.create({
+    const alert = await this.alertController.create({
       header: "Remover o item?",
-      message: 'Deseja removero item: ${nome}?',
+      message: `Deseja remover o item: ${nome}?`,
       buttons:[
         {
           text: 'Cancelar'
         },
         {
           text: 'Remover',
-          handler: ()=>{
+          handler: () =>{
             actionRemove()
           }
         }
       ]
     });
     alert.present();
-  }
 
+  }
 }

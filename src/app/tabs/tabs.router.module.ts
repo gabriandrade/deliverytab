@@ -22,7 +22,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import ('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
           }
         ]
       },
@@ -37,7 +37,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'tabs/produtos',
+        redirectTo: '/tabs/produtos',
         pathMatch: 'full'
       }
     ]
@@ -50,15 +50,24 @@ const routes: Routes = [
         loadChildren: '../enderecos/lista-endereco/lista-endereco.module#ListaEnderecoPageModule'
       }
     ]
-  },
+  },  
+  {
+    path: 'pedido',
+    children: [
+      {
+        path: 'carrinho/novo-item/:key',
+        loadChildren: '../pedidos/form-item-pedido/form-item-pedido.module#FormItemPedidoPageModule'
+      }
+    ]
+  },    
   {
     path: '',
-    redirectTo: 'tabs/produtos',
+    redirectTo: '/tabs/produtos',
     pathMatch: 'full'
   }
 ];
 
-@ NgModule({
+@NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

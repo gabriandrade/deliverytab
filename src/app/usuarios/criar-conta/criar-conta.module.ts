@@ -14,7 +14,7 @@ const routes: Routes = [
   }
 ];
 
-@ NgModule({
+@NgModule({
   imports: [
     CommonModule,
     FormsModule,

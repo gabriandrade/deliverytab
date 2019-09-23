@@ -1,47 +1,44 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-@ Injectable({
+@Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
-  [x: string]: any;
 
-  constructor(private afAuth: AngularFireAuth) { }
+  constructor(private afAuth:AngularFireAuth) { }
+
   criarConta(usuario: any) {
     return new Promise((resolve, reject) => {
-      this .afAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
+      this.afAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
         .then((userCredential: firebase.auth.UserCredential) => {
           userCredential.user.updateProfile({ displayName: usuario.nome, photoURL: '' });
           userCredential.user.sendEmailVerification();
-          this .logout();
+          this.logout();
           resolve();
         })
         .catch((error: any) => {
-          reject(this .handlerError(error));
+          reject(this.handlerError(error));
         });
     });
   }
 
+
   login(email: string, senha: string) {
     return new Promise((resolve, reject) => {
-      this .afAuth.auth.signInWithEmailAndPassword(email, senha)
+      this.afAuth.auth.signInWithEmailAndPassword(email, senha)
         .then((userCredential: firebase.auth.UserCredential) => {
           if (userCredential.user.emailVerified) {
             resolve();
           } else {
-            this .logout();
-            reject('Seu e-mail ainda não foi verificado. Por favor verifique seu e-mail.');
+            this.logout();
+            reject('Seu e-mail ainda não foi verificado. Por favor verifique seu e-mail.')
           }
         })
         .catch((error: any) => {
-          reject(this .handlerError(error));
+          reject(this.handlerError(error));
         });
     });
-  }
-
-  logout() {
-    return this .afAuth.auth.signOut();
   }
 
   enviarEmailResetarSenha(email: string) {
@@ -55,9 +52,13 @@ export class UsuariosService {
         });
     });
   }
+  
+  logout() {
+    return this.afAuth.auth.signOut();
+  }
 
-  getDadosUsuario() {
-    const user = { name: '', email: '' };
+  getDadosUsuario(){
+    const user = { name: '', email: ''};
     if (this.afAuth.auth.currentUser) {
       user.name = this.afAuth.auth.currentUser.displayName;
       user.email = this.afAuth.auth.currentUser.email;
@@ -68,7 +69,7 @@ export class UsuariosService {
 
   handlerError(error: any) {
     let mensagem = '';
-    if (error.code = 'auth/email-already-in-use') {
+    if (error.code == 'auth/email-already-in-use') {
       mensagem = 'O e-mail informado já está sendo usado.';
     } else if (error.code == 'auth/invalid-email') {
       mensagem = 'O e-mail informado é inválido.';
@@ -84,5 +85,5 @@ export class UsuariosService {
 
     return mensagem;
   }
-
+    
 }

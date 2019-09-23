@@ -1,10 +1,10 @@
-import { UsuariosService } from './../../usuarios/shared/usuarios.service';
+import { UsuariosService } from './../shared/usuarios.service';
 import { ToastService } from './../../core/shared/toast.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-@ Component({
+@Component({
   selector: 'app-criar-conta',
   templateUrl: './criar-conta.page.html',
   styleUrls: ['./criar-conta.page.scss'],
@@ -18,31 +18,32 @@ formCriarConta: FormGroup;
               private usuariosService: UsuariosService) { }
 
   ngOnInit() {
-    this .criarFormulario();
+    this.criarFormulario();
   }
 
-  get nome() { return this .formCriarConta.get('nome'); }
-  get email() { return this .formCriarConta.get('email'); }
-  get senha() { return this .formCriarConta.get('senha'); }
+  get nome() { return this.formCriarConta.get('nome'); }
+  get email() { return this.formCriarConta.get('email'); }
+  get senha() { return this.formCriarConta.get('senha'); }
 
   criarFormulario() {
-    this .formCriarConta = this .formBuilder.group({
-      nome: ['', Validators.required],
+    this.formCriarConta = this.formBuilder.group({
+      nome: ['', [Validators.required,Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.email]],
       senha: ['', Validators.required]
     });
-  }
+  }  
 
-  onSubmit() {
-    if (this .formCriarConta.valid) {
-      this .usuariosService.criarConta(this .formCriarConta.value)
+  onSubmit(){
+    if (this.formCriarConta.valid) {
+      this.usuariosService.criarConta(this.formCriarConta.value)
         .then(() => {
-          this .toast.show('Sua conta foi criada com sucesso.');
-          this .router.navigate(['/']);
+          this.toast.show('Sua conta foi criada com sucesso. Verifique seu Email!');
+          this.router.navigate(['/']);
         })
         .catch(mensagem => {
-          this .toast.show(mensagem);
+          this.toast.show(mensagem);
         });
-    }
+    }    
   }
+
 }

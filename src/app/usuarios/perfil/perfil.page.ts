@@ -1,5 +1,5 @@
-import { UsuariosService } from './../shared/usuarios.service';
 import { Component, OnInit } from '@angular/core';
+import { UsuariosService } from '../shared/usuarios.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,12 +17,12 @@ user: any = {};
     this.user = this.usuariosService.getDadosUsuario();
   }
 
-  sair() {
-    this .usuariosService.logout()
+  sair(){
+    this.usuariosService.logout()
     .then( () => {
-      this .router.navigate(['/login']);
-    });
-
+      this.router.navigate(['/login']);
+    })
   }
+  
 
 }

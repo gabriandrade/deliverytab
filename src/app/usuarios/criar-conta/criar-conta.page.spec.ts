@@ -5,7 +5,7 @@ import { CriarContaPage } from './criar-conta.page';
 
 describe('CriarContaPage', () => {
   let component: CriarContaPage;
-  let fixture: ComponentFixture< CriarContaPage>;
+  let fixture: ComponentFixture<CriarContaPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

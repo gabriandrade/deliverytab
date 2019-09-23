@@ -5,7 +5,7 @@ import { LoginPage } from './login.page';
 
 describe('LoginPage', () => {
   let component: LoginPage;
-  let fixture: ComponentFixture< LoginPage>;
+  let fixture: ComponentFixture<LoginPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
