@@ -6,5 +6,4 @@ export const firebaseconfig = {
   storageBucket: "delivery-maxado.appspot.com",
   messagingSenderId: "112653673667",
   appId: "1:112653673667:web:00362aab2dcd86d1"
-
 }

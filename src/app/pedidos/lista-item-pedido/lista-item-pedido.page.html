@@ -1,9 +1,51 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>lista-item-pedido</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Carrinho</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let item of itensPedido | async">
+      <ion-label text-wrap>
+        <h1>{{ item.produtoNome }}</h1>
+        <pre *ngIf="item.produtoDescricao" text-wrap>{{ item.produtoDescricao }}</pre>
+        <pre *ngIf="item.observacao" text-wrap>{{ item.observacao }}</pre>
+        <p>Preço: <app-valor [valor]="item.produtoPreco"></app-valor></p>
+        <p>Total: <app-valor [valor]="item.total"></app-valor></p>
 
+        <ion-grid>
+          <ion-row align-items-center>
+            <ion-col>
+              <ion-button expand="block" color="primary" (click)="adicionarQuantidade(item)">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col text-center>
+              {{ item.quantidade }}
+            </ion-col>
+            <ion-col>
+              <ion-button expand="block" color="primary" (click)="removerQuantidade(item)">
+                <ion-icon name="remove"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
+<ion-footer>
+  <p padding-horizontal text-right><b>Total do pedido: </b>
+    <app-valor [valor]="total"></app-valor>
+  </p>
+
+  <ion-button expand="block" size="large" [routerLink]="['/pedido/forma-pagamento']">
+    Forma de pagamento
+    <ion-icon slot="end" name="arrow-forward"></ion-icon>
+  </ion-button>
+</ion-footer>
