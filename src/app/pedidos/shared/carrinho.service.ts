@@ -3,6 +3,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FirebasePath } from 'src/app/core/shared/firebase-path';
+import { ReturnStatement } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,39 @@ export class CarrinhoService {
         return changes.length > 0;
       })
     );
+  }
+
+  calcularTotal(preco: number, quantidade: number) {
+    return preco * quantidade
+  }
+
+  update(key: string, quantidade: number, total: number) {
+    return this.getCarrinhoProdutoRef().update(key, {quantidade: quantidade, total: total});
+  }
+
+  remove(key: string) {
+    return this.getCarrinhoProdutoRef().remove(key);
+  }
+
+  getAll() {
+    return this.getCarrinhoProdutoRef().snapshotChanges().pipe(
+      map(changes => {
+        return changes.map(m => ({key: m.payload, ...m.payload.val() }) );
+      })
+    );
+  }
+
+  getTotalPdido() {
+    return this.getCarrinhoProdutoRef().snapshotChanges().pipe(
+      map(changes => {
+        return changes.map( (m: any) => (m.payload.val().total)).reduce( (prev: number, current: number) => {
+          return prev + current;
+        });
+      })
+    );
+  }
+
+  clear() {
+
   }
 }
