@@ -1,17 +1,37 @@
 <ion-header>
   <ion-toolbar color="warning">
-      <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-      </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Endereços</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-list>
+    <ion-item-sliding *ngFor="let endereco of enderecos | async">
+      <ion-item (click)="setEnderecoSelecionado(endereco)">
+        <ion-label text-wrap>
+          {{ getEnderecoText(endereco) }}
+        </ion-label>
+      </ion-item>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-        <ion-fab-button color="warning">
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
+      <ion-item-options side="end">
+        <ion-item-option color="secondary" (click)="editar(endereco.key)">
+          <ion-icon name="create"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="remover(endereco.key)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      
+    </ion-item-sliding>
+  </ion-list>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/usuarios/enderecos/novo']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

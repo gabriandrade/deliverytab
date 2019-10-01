@@ -1,9 +1,41 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>form-endereco</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Endereço</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+  <form [formGroup]="formEndereco" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="stacked">CEP</ion-label>
+      <ion-input type="number" formControlName="cep" placeholder="somente número"></ion-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-label position="stacked">Logradouro</ion-label>
+      <ion-input type="text" formControlName="logradouro"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Número</ion-label>
+      <ion-input type="text" formControlName="numero"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Complemento</ion-label>
+      <ion-input type="text" formControlName="complemento"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Bairro</ion-label>
+      <ion-input type="text" formControlName="bairro"></ion-input>
+    </ion-item>
+
+    <div margin-vertical>
+      <ion-button color="primary" expand="block" type="submit">Salvar</ion-button>
+    </div>
+  </form>
 </ion-content>
