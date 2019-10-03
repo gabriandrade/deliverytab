@@ -13,7 +13,7 @@ export class EnderecoService {
               private afAuth: AngularFireAuth) { }
 
   getEnderecoPath() {
-    const path = `${FirebasePath.CLIENTES_ENDERECOS}${this.afAuth.auth.currentUser.uid}`
+    const path = `${FirebasePath.CLIENTES_ENDERECOS}${this.afAuth.auth.currentUser.uid}`;
     return path;
   }
 

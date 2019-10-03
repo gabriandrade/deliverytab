@@ -11,7 +11,7 @@ export class AlertService {
   async ShowConfirmaExclusao(nome: string, actionRemove:() =>void){
     const alert = await this.alertController.create({
       header: "Remover o item?",
-      message: `Deseja remover o item: ${nome}?`,
+      message: `Deseja remover o item: ${nome} ?`,
       buttons:[
         {
           text: 'Cancelar'
