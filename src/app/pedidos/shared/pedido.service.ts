@@ -34,7 +34,23 @@ export class PedidoService {
   }
 
   private criarObjetoPedido(pedido: any) {
-
+    const numeroPedido = '#' + this.dateFormat.transform(new Date(), 'ddMMyyyyHHmmss');
+    const dataPedido = this.dateFormat.transform(new Date(), 'dd/mm/yyyy');
+    let pedidoRef = {
+      numero: numeroPedido,
+      status: PedidoService.STATUS.ENVIADO,
+      data: dataPedido,
+      formPagament: pedido.formaPagamento,
+      trocoPara: pedido.trocoPara,
+      tipoCartao: pedido.tipoCartao,
+      enderecoEntrega: pedido.enderecoEntrega,
+      usuariokey: this.afAuth.auth.currentUser.uid,
+      usuarioNome: this.afAuth.auth.currentUser.displayName,
+      //Tecnica para filtro de varios campos
+      usuarioStatus: this. afAuth.auth.currentUser.uid + '_' + PedidoService.STATUS.ENVIADO,
+      total: pedido.total
+    };
+    return pedidoRef;
   }
 
   getEstatusNome(status: number) {
