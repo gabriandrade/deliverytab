@@ -1,9 +1,92 @@
+import { FirebasePath } from 'src/app/core/shared/firebase-path';
+import { CarrinhoService } from './carrinho.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { Injectable } from '@angular/core';
+import { Key } from 'protractor';
+import { map } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
 
-  constructor() { }
+  public static TIPO_FORMA_PAGAMENTO = {
+    DINHEIRO: 1,
+    CARTAO: 2
+  };
+
+  public static STATUS = {
+    ENVIADO: 0,
+    CONFIRMADO: 1,
+    SAIU_PRA_ENTREGA: 2,
+    ENTREGUE: 3
+  };
+
+  constructor(private db: AngularFireDatabase,
+              private afAuth: AngularFireAuth,
+              private carrinhoService: CarrinhoService,
+              private dateFormat: DatePipe) { }
+
+  gerarPedido(pedido: any) {
+
+  }
+
+  private criarObjetoPedido(pedido: any) {
+
+  }
+
+  getEstatusNome(status: number) {
+    switch (status) {
+      case PedidoService.STATUS.ENVIADO:
+        return `Aguardando confirmação`;
+      case PedidoService.STATUS.CONFIRMADO:
+        return `Em preparação`;
+      case PedidoService.STATUS.SAIU_PRA_ENTREGA:
+        return `Saiu pra entrega`;
+      case PedidoService.STATUS.ENTREGUE:
+        return `Entregue`;
+    }
+  }
+
+  getFormaPagamentoNome(paymentType: number) {
+    switch (paymentType) {
+      case PedidoService.TIPO_FORMA_PAGAMENTO.DINHEIRO:
+        return `Dinheiro`;
+      case PedidoService.TIPO_FORMA_PAGAMENTO.CARTAO:
+        return `Carão de crédito/débito`;
+    }
+  }
+
+  getAll() {
+    return this.db.list(FirebasePath.PEDIDOS,
+      q => q.orderByChild('usuariokey').endAt(this.afAuth.auth.currentUser.uid))
+      .snapshotChanges().pipe(
+        map(changes => {
+          return changes.map(m => ({ Key: m.payload.key, ...m.payload.val() }));
+        })
+      );
+  }
+
+  getAllAbertos() {
+    const usuarioStatus = this.afAuth.auth.currentUser.uid + '_' + PedidoService.STATUS.SAIU_PRA_ENTREGA;
+    return this.db.list(FirebasePath.PEDIDOS,
+      q => q.orderByChild('UsuarioStatus').endAt(usuarioStatus))
+      .snapshotChanges().pipe(
+        map(changes => {
+          return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }));
+        })
+      );
+  }
+
+  getAllProdutos(key: string) {
+    const path = `${FirebasePath.PEDIDOS_PRODUTOS}${Key}`;
+    return this.db.list(path).snapshotChanges().pipe(
+      map(changes => {
+        return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }));
+      })
+    )
+  }
+
 }

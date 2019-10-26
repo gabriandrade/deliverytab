@@ -13,13 +13,13 @@ import { ValorComponent } from '../valor/valor.component';
     RouterModule,
     ReactiveFormsModule
   ],
-  exports:[
+  exports: [
     CommonModule,
     IonicModule,
     RouterModule,
     ReactiveFormsModule,
     ValorComponent
   ],
-  entryComponents:[ValorComponent]
+  entryComponents: [ValorComponent]
 })
 export class SharedModule { }

@@ -69,6 +69,10 @@ const routes: Routes = [
       {
         path: 'carrinho',
         loadChildren: '../pedidos/lista-item-pedido/lista-item-pedido.module#ListaItemPedidoPageModule'
+      },
+      {
+        path: 'forma-pagamento',
+        loadChildren: '../pedidos/lista-produto-pedido/lista-produto-pedido.module#ListaProdutoPedidoPageModule'
       }
     ]
   },
