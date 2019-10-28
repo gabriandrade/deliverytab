@@ -1,4 +1,4 @@
-import { FirebasePath } from 'src/app/core/shared/firebase-path';
+import { FirebasePath } from './../../core/shared/firebase-path';
 import { CarrinhoService } from './carrinho.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -6,11 +6,14 @@ import { Injectable } from '@angular/core';
 import { Key } from 'protractor';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { resolve } from 'url';
+import { reject } from 'q';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
+  [x: string]: any;
 
   public static TIPO_FORMA_PAGAMENTO = {
     DINHEIRO: 1,
@@ -30,7 +33,38 @@ export class PedidoService {
               private dateFormat: DatePipe) { }
 
   gerarPedido(pedido: any) {
+    return new Promise ( ( resolve, reject ) => {
+      const subscribe = this.carrinhoService.getAll().subscribe(produtos => {
+        subscribe.unsubscribe();
 
+        const pedidoRef = this.criarObjetoPedido(pedido);
+        const pedidoKey = this.db.createPushId();
+        const pedidoPath = `${FirebasePath.PEDIDOS}${pedidoKey}`;
+
+        let pedidoObj = {};
+        pedidoObj[pedidoPath] = pedidoRef;
+
+        produtos.forEach( (produto:any) => {
+          const pedidoProdutoPath = `${FirebasePath.PEDIDOS_PRODUTOS}${pedidoKey}/${produto.produtoKey}`;
+          pedidoObj[pedidoProdutoPath] = {
+            produtoNome: produto.produtoNome,
+            produtoDescricao: produto.Descricao,
+            observacao: produto.observacao,
+            produtoPreco: produto.produtoPreco,
+            quantidade: produto.quantidade,
+            total: produto.total
+          };
+        });
+
+        this.db.object('/').update(pedidoObj)
+         .then( () => {
+           this.carrinhoService.clear()
+            .then( () => resolve())
+            .catch( () => reject());
+         })
+         .catch( () => reject());
+      });
+    });
   }
 
   private criarObjetoPedido(pedido: any) {
@@ -102,7 +136,10 @@ export class PedidoService {
       map(changes => {
         return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }));
       })
-    )
+    );
   }
 
+  clear() {
+    return this.getCarrinhoProdutoRef().remove();
+  }
 }

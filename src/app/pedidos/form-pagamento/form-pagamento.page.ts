@@ -73,15 +73,15 @@ enderecoSelecionado: string = this.MENSAGEM_ENDERECO_VAZIO;
   }
 
   onSubmit() {
-  if (this.form.valid) {
-  this.pedidoService.gerarPedido(this.form.value)
-    .then( () => {
+    if (this.form.valid) {
+     this.pedidoService.gerarPedido(this.form.value)
+     .then( () => {
       this.toast.show('Pedido salvo com sucesso. Aguarde a confirmação');
       this.router.navigate(['/tbas/produtos']);
-    })
-    .catch( () => {
+     })
+      .catch( () => {
       this.toast.show('Erro ao salvar o Pedido');
-      });
+     });
     }
   }
 }
