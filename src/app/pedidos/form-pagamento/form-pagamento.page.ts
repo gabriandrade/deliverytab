@@ -9,11 +9,12 @@ import { PedidoService } from '../shared/pedido.service';
 import { ToastService } from 'src/app/core/shared/toast.service';
 
 @Component({
-  selector: 'app-forma-pagamento',
-  templateUrl: './forma-pagamento.page.html',
-  styleUrls: ['./forma-pagamento.page.scss'],
+  selector: 'app-form-pagamento',
+  templateUrl: './form-pagamento.page.html',
+  styleUrls: ['./form-pagamento.page.scss'],
 })
-export class FormaPagamentoPage implements OnInit {
+
+export class FormPagamentoPage implements OnInit {
 MENSAGEM_ENDERECO_VAZIO: string= "Por favor escolha um endereço de entrega";
 form: FormGroup;
 produtos: Observable<any[]>;

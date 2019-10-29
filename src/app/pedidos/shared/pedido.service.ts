@@ -6,8 +6,6 @@ import { Injectable } from '@angular/core';
 import { Key } from 'protractor';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { resolve } from 'url';
-import { reject } from 'q';
 
 @Injectable({
   providedIn: 'root'

@@ -3,14 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
-
-import { FormaPagamentoPage } from './form-pagamento.page';
+import { FormPagamentoPage } from './form-pagamento.page';
+import { SharedModule } from 'src/app/core/shared/shared/shared.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: FormaPagamentoPage
+    component: FormPagamentoPage
   }
 ];
 
@@ -18,9 +17,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [FormaPagamentoPage]
+  declarations: [FormPagamentoPage]
 })
 export class FormPagamentoPageModule {}
