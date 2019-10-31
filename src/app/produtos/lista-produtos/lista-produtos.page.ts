@@ -23,11 +23,11 @@ export class ListaProdutosPage implements OnInit {
     this.produtos = this.produtosService.getAll(null);
     this.categorias = this.produtosService.getCategoriasAll();
     this.carrinhoService.carrinhoPossuiItens().subscribe( (existemItens: boolean) => {
-      this.carrinhoPossuiItens = existemItens;
-    });
+        this.carrinhoPossuiItens = existemItens;
+    })
   }
 
-  buscarProdutos() {
+  buscarProdutos(){
     this.produtos = this.produtosService.getAll(this.categoriaSelecionada);
   }
 

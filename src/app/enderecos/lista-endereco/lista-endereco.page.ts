@@ -1,12 +1,12 @@
+import { Router } from '@angular/router';
 import { AlertService } from './../../core/shared/alert.service';
 import { EnderecoService } from './../shared/endereco.service';
 import { Observable } from 'rxjs';
 import { Component, OnInit, Input } from '@angular/core';
 import { ToastService } from 'src/app/core/shared/toast.service';
 import { ModalController } from '@ionic/angular';
-import { Router } from '@angular/router';
 
-@ Component({
+@Component({
   selector: 'app-lista-endereco',
   templateUrl: './lista-endereco.page.html',
   styleUrls: ['./lista-endereco.page.scss'],
@@ -14,16 +14,16 @@ import { Router } from '@angular/router';
 export class ListaEnderecoPage implements OnInit {
   enderecos: Observable<any[]>;
   @Input()
-  selecionarEndereco = false;
+  selecionarEndereco: boolean = false;
 
-  constructor(private enderecosService: EnderecoService,
+  constructor(private enderecoService: EnderecoService,
               private alert: AlertService,
               private toast: ToastService,
               private router: Router,
               private modalController: ModalController) { }
 
   ngOnInit() {
-    this.enderecos = this.enderecosService.getALL();
+    this.enderecos = this.enderecoService.getAll();
   }
 
   getEnderecoText(endereco: any) {
@@ -33,8 +33,9 @@ export class ListaEnderecoPage implements OnInit {
     if (endereco.complemento) {
       enderecoText += ', ' + endereco.complemento;
     }
-    enderecoText += ' _ ' + endereco.bairro;
-    enderecoText += ' _ ' + endereco.cep;
+    enderecoText += ' - ' + endereco.bairro;
+    enderecoText += ' - ' + endereco.cep;
+    console.log(enderecoText);
     return enderecoText;
   }
 
@@ -43,18 +44,19 @@ export class ListaEnderecoPage implements OnInit {
   }
 
   remover(endereco: any) {
-    this.alert.ShowConfirmaExclusao(endereco.logradouro + ', ' + endereco.numero, () => {
-      this.enderecosService.remove(endereco.key)
+    this.alert.ShowConfirmaExclusao(endereco.logradouro+', '+endereco.numero, () => {
+      this.enderecoService.remove(endereco.key)
         .then( () => {
-          this.toast.show('Endereço removido com sucesso!!!');
-        });
-    });
+          this.toast.show('Endereço removido com sucesso.!!! ');
+        })
+    })
   }
 
   setEnderecoSelecionado(endereco: any) {
     if (this.selecionarEndereco) {
-      const enderecoText = this. getEnderecoText(endereco);
+      const enderecoText = this.getEnderecoText(endereco);
       this.modalController.dismiss({ endereco: enderecoText });
     }
   }
+
 }

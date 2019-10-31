@@ -56,9 +56,9 @@ const routes: Routes = [
       {
         path: 'enderecos/editar/:key',
         loadChildren: '../enderecos/form-endereco/form-endereco.module#FormEnderecoPageModule'
-      },
+      }
     ]
-  },
+  },  
   {
     path: 'pedido',
     children: [
@@ -71,11 +71,11 @@ const routes: Routes = [
         loadChildren: '../pedidos/lista-item-pedido/lista-item-pedido.module#ListaItemPedidoPageModule'
       },
       {
-        path: 'form-pagamento',
-        loadChildren: '../pedidos/lista-produto-pedido/lista-produto-pedido.module#ListaProdutoPedidoPageModule'
+        path: 'forma-pagamento',
+        loadChildren: '../pedidos/form-pagamento/form-pagamento.module#FormPagamentoPageModule'
       }
     ]
-  },
+  },    
   {
     path: '',
     redirectTo: '/tabs/produtos',

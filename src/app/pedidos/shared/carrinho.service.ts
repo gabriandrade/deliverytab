@@ -1,64 +1,68 @@
-import { map } from 'rxjs/operators';
+import { FirebasePath } from './../../core/shared/firebase-path';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { FirebasePath } from 'src/app/core/shared/firebase-path';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarrinhoService {
 
-  constructor(private db:AngularFireDatabase, private afAuth: AngularFireAuth) {}
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) { }
 
-  getCarrinhoProdutoRef() {
+  getCarrinhoProdutosRef(){
     const path = `${FirebasePath.CARRINHO}${this.afAuth.auth.currentUser.uid}/${FirebasePath.PRODUTOS}`;
     return this.db.list(path);
   }
 
-  insert(itemProduto: any) {
-    return this.getCarrinhoProdutoRef().push(itemProduto);
+  insert(itemProduto: any){
+    return this.getCarrinhoProdutosRef().push(itemProduto);
   }
 
-  carrinhoPossuiItens() {
-    return this.getCarrinhoProdutoRef().snapshotChanges().pipe(
+  carrinhoPossuiItens(){
+    return this.getCarrinhoProdutosRef().snapshotChanges().pipe(
       map(changes => {
-        return changes.length > 0;
+        return changes.length >0
       })
-    );
+    )
   }
 
-  calcularTotal(preco: number, quantidade: number) {
-    return preco * quantidade
+  calcularTotal(preco: number, quantidade: number){
+    return preco * quantidade;
   }
 
   update(key: string, quantidade: number, total: number) {
-    return this.getCarrinhoProdutoRef().update(key, {quantidade: quantidade, total: total});
+    return this.getCarrinhoProdutosRef().update(key, {quantidade: quantidade, total: total})
   }
 
-  remove(key: string) {
-    return this.getCarrinhoProdutoRef().remove(key);
+  remove(key: string){
+    return this.getCarrinhoProdutosRef().remove(key);
   }
 
-  getAll() {
-    return this.getCarrinhoProdutoRef().snapshotChanges().pipe(
+  getAll(){
+    return this.getCarrinhoProdutosRef().snapshotChanges().pipe(
       map(changes => {
-        return changes.map(m => ({key: m.payload, ...m.payload.val() }) );
+        return changes.map(m => ({key: m.payload.key, ...m.payload.val() }) )
       })
-    );
+    )
   }
 
-  getTotalPdido() {
-    return this.getCarrinhoProdutoRef().snapshotChanges().pipe(
+  getTotalPedido(){
+    return this.getCarrinhoProdutosRef().snapshotChanges().pipe(
       map(changes => {
-        return changes.map( (m: any) => (m.payload.val().total)).reduce( (prev: number, current: number) => {
-          return prev + current;
-        });
+        return changes
+          .map( (m: any) => (m.payload.val().total) )
+          .reduce( (prev: number, current: number) => {
+            return prev + current;
+          })
       })
-    );
+    )
   }
 
-  clear() {
-    return this.getCarrinhoProdutoRef().remove();
+  clear(){
+    return this.getCarrinhoProdutosRef().remove();
   }
+
+
 }
