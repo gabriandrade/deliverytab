@@ -17,12 +17,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab2',
+        path: 'pedidos',
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+            loadChildren: '../pedidos/lista-pedido/lista-pedido.module#ListaPedidoPageModule'
           }
         ]
       },
@@ -58,7 +57,7 @@ const routes: Routes = [
         loadChildren: '../enderecos/form-endereco/form-endereco.module#FormEnderecoPageModule'
       }
     ]
-  },  
+  },
   {
     path: 'pedido',
     children: [
@@ -75,7 +74,7 @@ const routes: Routes = [
         loadChildren: '../pedidos/form-pagamento/form-pagamento.module#FormPagamentoPageModule'
       }
     ]
-  },    
+  },
   {
     path: '',
     redirectTo: '/tabs/produtos',

@@ -1,15 +1,16 @@
+import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/core/shared/shared/shared.module';
 
-import { PerfilPage } from './perfil.page';
+import { ListaPedidoPage } from './lista-pedido.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: PerfilPage
+    component: ListaPedidoPage
   }
 ];
 
@@ -18,8 +19,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     SharedModule,
+    IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PerfilPage]
+  declarations: [ListaPedidoPage]
 })
-export class PerfilPageModule {}
+export class ListaPedidoPageModule {}

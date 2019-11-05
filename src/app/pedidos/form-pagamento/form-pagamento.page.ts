@@ -36,10 +36,10 @@ enderecoSelecionado: string = this.MENSAGEM_ENDERECO_VAZIO;
         subscribe.unsubscribe();
         this.total = total;
         this.form.patchValue({ total: total });
-    })
+    });
   }
 
-  criarFormulario(){
+  criarFormulario() {
     this.form = this.formBuilder.group({
       formaPagamento: [''],
       trocoPara: [''],
@@ -67,10 +67,10 @@ enderecoSelecionado: string = this.MENSAGEM_ENDERECO_VAZIO;
         this.form.patchValue({ enderecoEntrega: this.enderecoSelecionado });
       });
       modal.present();
-    })
+    });
   }
 
-  onSubmit(){
+  onSubmit() {
     if (this.form.valid) {
       this.pedidoService.gerarPedido(this.form.value)
         .then(() => {

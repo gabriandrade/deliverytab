@@ -23,10 +23,12 @@ export class PedidoService {
     ENTREGUE: 3
   };
 
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, 
-    private carrinhoService: CarrinhoService, private dateFormat: DatePipe) { }
+  constructor(private db: AngularFireDatabase,
+              private afAuth: AngularFireAuth,
+              private carrinhoService: CarrinhoService,
+              private dateFormat: DatePipe ) { }
 
-  gerarPedido(pedido: any){
+  gerarPedido(pedido: any) {
     return new Promise( (resolve, reject) => {
       const subscribe = this.carrinhoService.getAll().subscribe(produtos => {
         subscribe.unsubscribe();
@@ -35,21 +37,20 @@ export class PedidoService {
         const pedidoKey = this.db.createPushId();
         const pedidoPath = `${FirebasePath.PEDIDOS}${pedidoKey}`;
 
-        let pedidoObj = {};
+        const pedidoObj = {};
         pedidoObj[pedidoPath] = pedidoRef;
 
         produtos.forEach( (produto: any) => {
           const pedidoProdutoPath = `${FirebasePath.PEDIDOS_PRODUTOS}${pedidoKey}/${produto.produtoKey}`;
           pedidoObj[pedidoProdutoPath] = {
             produtoNome: produto.produtoNome,
-            produtoDescricao: produto.Descricao,
+            produtoDescricao: produto.produtoDescricao,
             observacao: produto.observacao,
             produtoPreco: produto.produtoPreco,
             quantidade: produto.quantidade,
             total: produto.total
           };
         });
-        
         this.db.object('/').update(pedidoObj)
           .then(() => {
             this.carrinhoService.clear()
@@ -57,14 +58,14 @@ export class PedidoService {
               .catch(() => reject ());
           })
           .catch( () => reject());
-      })
-    })
+      });
+    });
   }
 
-  private criarObjetoPedido(pedido: any){
+  private criarObjetoPedido(pedido: any) {
     const numeroPedido = '#' + this.dateFormat.transform(new Date(), 'ddMMyyyyHHmmss');
     const dataPedido = this.dateFormat.transform(new Date(), 'dd/MM/yyyy');
-    let pedidoRef = {
+    const pedidoRef = {
       numero: numeroPedido,
       status: PedidoService.STATUS.ENVIADO,
       data: dataPedido,
@@ -77,7 +78,7 @@ export class PedidoService {
       // Tecnica para filtro de varios campos
       usuarioStatus: this.afAuth.auth.currentUser.uid + '_' + PedidoService.STATUS.ENVIADO,
       total: pedido.total
-    }
+    };
     return pedidoRef;
   }
 
@@ -94,8 +95,8 @@ export class PedidoService {
     }
   }
 
-  getFormaPagamentoNome(paymentType: number){
-    switch(paymentType){
+  getFormaPagamentoNome(paymentType: number) {
+    switch (paymentType) {
       case PedidoService.TIPO_FORMA_PAGAMENTO.DINHEIRO:
         return 'Dinheiro';
       case PedidoService.TIPO_FORMA_PAGAMENTO.CARTAO:
@@ -108,29 +109,29 @@ export class PedidoService {
       q => q.orderByChild('usuarioKey').endAt(this.afAuth.auth.currentUser.uid))
       .snapshotChanges().pipe(
         map(changes => {
-          return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }) )
+          return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }) );
         })
-      )
+      );
   }
 
-  getAllAbertos(){
+  getAllAbertos() {
     const usuarioStatus = this.afAuth.auth.currentUser.uid + '_' + PedidoService.STATUS.SAIU_PARA_ENTREGA;
     return this.db.list(FirebasePath.PEDIDOS,
       q => q.orderByChild('usuarioStatus').endAt(usuarioStatus))
       .snapshotChanges().pipe(
         map(changes => {
-          return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }))
+          return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }));
         })
-      )
+      );
   }
 
-  getAllProdutos(key: string){
+  getAllProdutos(key: string) {
     const path = `${FirebasePath.PEDIDOS_PRODUTOS}${key}`;
     return this.db.list(path).snapshotChanges().pipe(
       map(changes => {
-        return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }))
+        return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }));
       })
-    )
+    );
   }
 
 }

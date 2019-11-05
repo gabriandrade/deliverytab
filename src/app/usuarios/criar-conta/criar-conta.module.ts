@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../core/shared/shared/shared.module';
 
-
 import { CriarContaPage } from './criar-conta.page';
 
 const routes: Routes = [

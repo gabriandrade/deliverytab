@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ValorComponent implements OnInit {
   @Input()
-  valor:number;
+  valor: number;
 
   constructor() { }
 

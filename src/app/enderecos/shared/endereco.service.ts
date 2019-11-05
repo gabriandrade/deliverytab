@@ -11,42 +11,42 @@ export class EnderecoService {
 
   constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) { }
 
-  getEnderecosPath(){
-    const path = `${FirebasePath.CLIENTES_ENDERECOS}${this.afAuth.auth.currentUser.uid}`
+  getEnderecosPath() {
+    const path = `${FirebasePath.CLIENTES_ENDERECOS}${this.afAuth.auth.currentUser.uid}`;
     return path;
   }
 
-  getEnderecoRef(){
+  getEnderecoRef() {
     const path = this.getEnderecosPath();
     return this.db.list(path);
   }
 
-  getAll(){
+  getAll() {
     return this.getEnderecoRef().snapshotChanges().pipe(
       map(changes => {
-        return changes.map(m => ({key: m.payload.key, ...m.payload.val() }) )
-      })
-    )
-  }
-
-  getByKey(key: string){
-    const path = `${this.getEnderecosPath()}/${key}`;
-    return this.db.object(path).snapshotChanges().pipe(
-      map(change => {
-        return ({ key: change.key, ...change.payload.val() })
+        return changes.map(m => ({key: m.payload.key, ...m.payload.val() }) );
       })
     );
   }
 
-  insert(endereco: any){
+  getByKey(key: string) {
+    const path = `${this.getEnderecosPath()}/${key}`;
+    return this.db.object(path).snapshotChanges().pipe(
+      map(change => {
+        return ({ key: change.key, ...change.payload.val() });
+      })
+    );
+  }
+
+  insert(endereco: any) {
     return this.save(endereco, null);
   }
 
-  update(endereco: any, key: string){
+  update(endereco: any, key: string) {
     return this.save(endereco, key);
   }
 
-  private save(endereco: any, key: string){
+  private save(endereco: any, key: string) {
     return new Promise( (resolve, reject) => {
       const enderecoRef = this.getEnderecoRef();
 
@@ -58,12 +58,12 @@ export class EnderecoService {
         enderecoRef.push(endereco)
           .then( (result: any) => resolve(result.key) );
       }
-    })
+    });
   }
 
-  remove(key: string){
+  remove(key: string) {
     return this.getEnderecoRef().remove(key);
   }
 
 
-}  
+}
