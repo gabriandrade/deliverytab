@@ -14,7 +14,7 @@ import { ModalController } from '@ionic/angular';
 export class ListaEnderecoPage implements OnInit {
   enderecos: Observable<any[]>;
   @Input()
-  selecionarEndereco: boolean = false;
+  selecionarEndereco = false;
 
   constructor(private enderecoService: EnderecoService,
               private alert: AlertService,
@@ -47,7 +47,7 @@ export class ListaEnderecoPage implements OnInit {
     this.alert.ShowConfirmaExclusao(endereco.logradouro + ', ' + endereco.numero, () => {
       this.enderecoService.remove(endereco.key)
         .then( () => {
-          this.toast.show('Endereço removido com sucesso.!!!');
+          this.toast.show('Endereço removido com sucesso.!!! ');
         });
     });
   }

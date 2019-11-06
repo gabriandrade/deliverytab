@@ -13,7 +13,7 @@ export class ListaProdutosPage implements OnInit {
   produtos: Observable<any[]>;
   categorias: Observable<any[]>;
   categoriaSelecionada: string;
-  carrinhoPossuiItens: boolean = false;
+  carrinhoPossuiItens = false;
 
   constructor(private router: Router,
               private produtosService: ProdutosService,
@@ -24,14 +24,14 @@ export class ListaProdutosPage implements OnInit {
     this.categorias = this.produtosService.getCategoriasAll();
     this.carrinhoService.carrinhoPossuiItens().subscribe( (existemItens: boolean) => {
         this.carrinhoPossuiItens = existemItens;
-    })
+    });
   }
 
-  buscarProdutos(){
+  buscarProdutos() {
     this.produtos = this.produtosService.getAll(this.categoriaSelecionada);
   }
 
-  adicionarProduto(produtoKey: string){
+  adicionarProduto(produtoKey: string) {
     this.router.navigate(['pedido/carrinho/novo-item/', produtoKey]);
   }
 
