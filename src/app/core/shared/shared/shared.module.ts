@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ValorComponent } from '../valor/valor.component';
 
 @NgModule({
-  declarations: [ValorComponent],
+  declarations: [ValorComponent, ListaEnderecoPage],
   imports: [
     CommonModule,
     IonicModule,
