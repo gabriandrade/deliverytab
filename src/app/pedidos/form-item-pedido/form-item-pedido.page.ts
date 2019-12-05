@@ -11,9 +11,9 @@ import { ToastService } from 'src/app/core/shared/toast.service';
   styleUrls: ['./form-item-pedido.page.scss'],
 })
 export class FormItemPedidoPage implements OnInit {
-produto: any = {}
+produto: any = {};
 form: FormGroup;
-total: number = 0;
+total = 0;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
               private router: Router, private produtosService: ProdutosService,
@@ -23,7 +23,7 @@ total: number = 0;
   ngOnInit() {
     this.criarFormulario();
     // comentário...
-    let key = this.route.snapshot.paramMap.get('key');
+    const key = this.route.snapshot.paramMap.get('key');
     if (key) {
       const subscribe = this.produtosService.getByKey(key).subscribe( (produto: any) => {
         subscribe.unsubscribe();
@@ -35,15 +35,15 @@ total: number = 0;
           produtoDescricao: produto.descricao,
           produtoPreco: produto.preco,
           quantidade: 1
-        })
+        });
         this.executaCalcularTotal();
 
-      })
+      });
     }
 
   }
 
-  criarFormulario(){
+  criarFormulario() {
     this.form = this.formBuilder.group({
       produtoKey: [''],
       produtoNome: [''],
@@ -52,40 +52,41 @@ total: number = 0;
       quantidade: [''],
       observacao: [''],
       total: ['']
-    })
+    });
   }
 
-  executaCalcularTotal(){
+  executaCalcularTotal() {
     this.atualizaTotal(this.form.value.quantidade);
   }
 
-  adicionarQuantidade(){
+  adicionarQuantidade() {
     let qtd = this.form.value.quantidade;
     qtd++;
     this.atualizaTotal(qtd);
   }
 
-  removerQuantidade(){
+  removerQuantidade() {
     let qtd = this.form.value.quantidade;
     qtd--;
-    if(qtd <=0)
+    if (qtd <= 0) {
       qtd=1;
+    }
 
-    this.atualizaTotal(qtd);  
+    this.atualizaTotal(qtd);
   }
 
-  atualizaTotal(quantidade: number){
+  atualizaTotal(quantidade: number) {
     this.total = this.produto.preco * quantidade;
-    this.form.patchValue({quantidade: quantidade, total: this.total});
+    this.form.patchValue({quantidade, total: this.total});
   }
 
-  onSubmit(){
+  onSubmit() {
     if (this.form.valid) {
       this.carrinhoService.insert(this.form.value)
         .then( () => {
           this.toast.show('Produto adicionado com sucesso !!!');
           this.router.navigate(['/tabs/produtos']);
-        })
+        });
     }
   }
 

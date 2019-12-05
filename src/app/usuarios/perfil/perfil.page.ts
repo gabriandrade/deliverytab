@@ -17,12 +17,12 @@ user: any = {};
     this.user = this.usuariosService.getDadosUsuario();
   }
 
-  sair(){
+  sair() {
     this.usuariosService.logout()
     .then( () => {
       this.router.navigate(['/login']);
-    })
+    });
   }
-  
+
 
 }

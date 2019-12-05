@@ -27,13 +27,13 @@ formCriarConta: FormGroup;
 
   criarFormulario() {
     this.formCriarConta = this.formBuilder.group({
-      nome: ['', [Validators.required,Validators.minLength(5)]],
+      nome: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.email]],
       senha: ['', Validators.required]
     });
-  }  
+  }
 
-  onSubmit(){
+  onSubmit() {
     if (this.formCriarConta.valid) {
       this.usuariosService.criarConta(this.formCriarConta.value)
         .then(() => {
@@ -43,7 +43,7 @@ formCriarConta: FormGroup;
         .catch(mensagem => {
           this.toast.show(mensagem);
         });
-    }    
+    }
   }
 
 }

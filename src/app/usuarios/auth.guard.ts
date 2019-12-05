@@ -10,7 +10,9 @@ import { ToastService } from '../core/shared/toast.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router, private afAuth: AngularFireAuth, private toast: ToastService) {}
+  constructor(private router: Router,
+              private afAuth: AngularFireAuth,
+              private toast: ToastService) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.afAuth.user.pipe(
@@ -22,7 +24,7 @@ export class AuthGuard implements CanActivate {
           this.router.navigate(['/login']);
         }
       })
-    )
+    );
   }
 
 }

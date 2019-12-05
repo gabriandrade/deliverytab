@@ -6,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class UsuariosService {
 
-  constructor(private afAuth:AngularFireAuth) { }
+  constructor(private afAuth: AngularFireAuth) { }
 
   criarConta(usuario: any) {
     return new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ export class UsuariosService {
             resolve();
           } else {
             this.logout();
-            reject('Seu e-mail ainda não foi verificado. Por favor verifique seu e-mail.')
+            reject('Seu e-mail ainda não foi verificado. Por favor verifique seu e-mail.');
           }
         })
         .catch((error: any) => {
@@ -52,12 +52,12 @@ export class UsuariosService {
         });
     });
   }
-  
+
   logout() {
     return this.afAuth.auth.signOut();
   }
 
-  getDadosUsuario(){
+  getDadosUsuario() {
     const user = { name: '', email: ''};
     if (this.afAuth.auth.currentUser) {
       user.name = this.afAuth.auth.currentUser.displayName;
@@ -85,5 +85,5 @@ export class UsuariosService {
 
     return mensagem;
   }
-    
+
 }
