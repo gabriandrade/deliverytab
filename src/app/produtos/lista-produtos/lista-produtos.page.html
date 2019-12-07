@@ -9,9 +9,9 @@
       <ion-item>
   
         <ion-label>Edições</ion-label>
-        <ion-select (ionChange)="buscarProdutos()" [(ngModel)]="categoriaSelecionada">
+        <ion-select (ionChange)="buscarProdutos()" [(ngModel)]="produtoSelecionada">
           <ion-select-option value="" [selected]="true">Todas</ion-select-option>
-          <ion-select-option *ngFor="let categoria of categorias | async" [value]="categoria.key">{{ categoria.nome }}
+          <ion-select-option *ngFor="let produto of produtos | async" [value]="produto.key">{{ produto.edicao }}
           </ion-select-option>
         </ion-select>
   

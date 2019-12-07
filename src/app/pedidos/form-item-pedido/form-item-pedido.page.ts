@@ -69,7 +69,7 @@ total = 0;
     let qtd = this.form.value.quantidade;
     qtd--;
     if (qtd <= 0) {
-      qtd=1;
+      qtd = 1;
     }
 
     this.atualizaTotal(qtd);

@@ -16,15 +16,15 @@ const routes: Routes = [
           }
         ]
       },
-      {
-        path: 'pedidos',
-        children: [
-          {
-            path: '',
-            loadChildren: '../pedidos/lista-pedido/lista-pedido.module#ListaPedidoPageModule'
-          }
-        ]
-      },
+      // {
+      //   path: 'pedidos',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: '../pedidos/lista-pedido/lista-pedido.module#ListaPedidoPageModule'
+      //     }
+      //   ]
+      // },
       {
         path: 'perfil',
         children: [
